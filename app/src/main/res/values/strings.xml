@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">All Day Song</string>
+    <string name="cover">cover</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_bar">app bar</string>
+    <string name="full_song"><![CDATA[Full Song>>]]></string>
+    <string name="full_artist">FULL ARTIST PAGE >> </string>
+    <string name="full_playlist">Full Playlist >></string>
+    <string name="favorite_button">favorite button</string>
+    <string name="song_link">SONG LINK</string>
+    <string name="artist_cover">artist cover</string>
+    <string name="artist_page"><![CDATA[Artist Page >>]]></string>
+    <string name="back_arrow">back arrow</string>
+
+
+</resources>
