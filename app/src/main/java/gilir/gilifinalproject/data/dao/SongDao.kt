@@ -22,7 +22,7 @@ interface SongDao {
     suspend fun updateSong(song: Song)
 
     @Update
-    suspend fun updateASong(song: ArtistSong)
+    suspend fun updateASong(song: Song)
 
     @Update
     suspend fun updatePlSong(song: PlaylistSong)
@@ -39,7 +39,7 @@ interface SongDao {
     suspend fun addAllPlaylists(songsList: List<Playlist>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addAllArtistSongs(songsList: List<ArtistSong>)
+    suspend fun addAllArtistSongs(songsList: List<Song>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addAllPlaylistsSong(songsList: List<PlaylistSong>)
@@ -64,7 +64,7 @@ interface SongDao {
     fun getFavoriteSong(): LiveData<List<Song>>
 
     @Query("SELECT * FROM songs WHERE artist =:artistId")
-    fun getArtistSong(artistId: Int): LiveData<List<Song>>
+    fun getArtistSongs(artistId: Int): LiveData<List<Song>>
 
 
 

@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class FullPageViewModel : ViewModel() {
 
-    private val _artistSongs: MutableLiveData<List<ArtistSong>> = MutableLiveData()
-    val artistSongs: LiveData<List<ArtistSong>> = _artistSongs
+    private val _artistSongs: MutableLiveData<List<Song>> = MutableLiveData()
+    val artistSongs: LiveData<List<Song>> = _artistSongs
 
 
 
@@ -28,7 +28,7 @@ class FullPageViewModel : ViewModel() {
     }
 
 
-    fun updateASong(song: ArtistSong) {
+    fun updateASong(song: Song) {
         viewModelScope.launch {
             Application.repository.updateASong(song)
         }
@@ -37,7 +37,7 @@ class FullPageViewModel : ViewModel() {
     fun getArtistSongs(artistId: String) {
         viewModelScope.launch {
          val artistSongs = Application.repository.getArtistSongs(artistId)
-            _artistSongs.postValue(artistSongs.artistSongList)
+            _artistSongs.postValue(artistSongs.songs)
         }
     }
 

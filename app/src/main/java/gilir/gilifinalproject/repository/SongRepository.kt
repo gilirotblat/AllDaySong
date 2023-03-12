@@ -7,6 +7,7 @@ import gilir.gilifinalproject.models.artistaong.ArtistSongResponse
 import gilir.gilifinalproject.models.playlistsong.PlaylistSong
 import gilir.gilifinalproject.models.playlistsong.PlaylistSongResponse
 import gilir.gilifinalproject.models.songsapi.Song
+import gilir.gilifinalproject.models.songsapi.SongResponse
 import gilir.gilifinalproject.service.SongService
 
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,7 @@ class SongRepository(private val songDao: SongDao) {
 
 
 
-    suspend fun updateASong(song: ArtistSong) {
+    suspend fun updateASong(song: Song) {
         withContext(Dispatchers.IO) {
             songDao.updateASong(song)
         }
@@ -55,11 +56,11 @@ class SongRepository(private val songDao: SongDao) {
         }
     }
 
-    suspend fun getArtistSongs(artistId: String): ArtistSongResponse {
-        val artistSong = SongService.create().getArtistSongs(artistId)
-        songDao.addAllArtistSongs(artistSong.artistSongList)
+    suspend fun getArtistSongs(artistId: String): SongResponse {
+        val artistSongs = SongService.create().getArtistSongs(artistId)
+        songDao.addAllArtistSongs(artistSongs.songs)
         return withContext(Dispatchers.IO) {
-            artistSong
+            artistSongs
         }
     }
 

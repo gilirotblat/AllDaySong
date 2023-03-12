@@ -39,7 +39,7 @@ interface SongService {
 
 
     @GET("artist/{ARTIST_ID}/top?limit=50")
-    suspend fun getArtistSongs(@Path("ARTIST_ID") artistId : String):ArtistSongResponse
+    suspend fun getArtistSongs(@Path("ARTIST_ID") artistId : String):SongResponse
 
 
     //לשנות את הכל לstring value

@@ -18,7 +18,7 @@ class MusicViewModel : ViewModel() {
     private val _songs: MutableLiveData<List<Song>> = MutableLiveData()
     val songs: LiveData<List<Song>> = _songs
 
-
+//moshi
 
     val artist: LiveData<List<Artist>> = Application.repository.getArtists()
     val playlist: LiveData<List<Playlist>> = Application.repository.getPlaylists()
