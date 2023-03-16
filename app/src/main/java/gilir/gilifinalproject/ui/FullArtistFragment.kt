@@ -66,10 +66,7 @@ class FullArtistFragment : Fragment() {
                 }
 
                 fullArtViewModel.artistSongs.observe(viewLifecycleOwner) { response ->
-                    binding.rvTracklist.adapter = SongAdapter(response) { clickedSong->
-                        clickedSong.isClicked = !clickedSong.isClicked
-                        fullArtViewModel.updateSong(clickedSong)
-                    }
+                    binding.rvTracklist.adapter = SongAdapter(response, fullArtViewModel)
                 }
                fullArtViewModel.getArtistSongs(artist.artistId)
 

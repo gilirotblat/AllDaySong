@@ -1,5 +1,6 @@
 package gilir.gilifinalproject.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,7 +9,7 @@ import gilir.gilifinalproject.Application
 import gilir.gilifinalproject.models.songsapi.Song
 import kotlinx.coroutines.launch
 
-class FullPageViewModel : ViewModel() {
+class FullPageViewModel : ViewModel(), ViewModelSongUpdater {
 
     private val _artistSongs: MutableLiveData<List<Song>> = MutableLiveData()
     val artistSongs: LiveData<List<Song>> = _artistSongs
@@ -19,12 +20,19 @@ class FullPageViewModel : ViewModel() {
 
 
 
-    fun updateSong(song: Song) {
+    override fun updateSong(song: Song) {
         viewModelScope.launch {
             Application.repository.update(song)
         }
     }
 
+    override fun addSongToFavorites(song: Song) {
+        viewModelScope.launch {
+            Application.repository.addSongToFavorites(song).also {
+                Log.d("TAG", "addSongToFavorites: $it")
+            }
+        }
+    }
 
     fun getArtistSongs(artistId: Long) {
         viewModelScope.launch {

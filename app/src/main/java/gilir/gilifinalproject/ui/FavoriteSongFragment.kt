@@ -1,6 +1,7 @@
 package gilir.gilifinalproject.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,10 +34,7 @@ class FavoriteSongFragment : Fragment() {
         binding.rvFavoriteSong.layoutManager = LinearLayoutManager(requireContext())
 
         favSongViewModel.favoriteSongs.observe(viewLifecycleOwner) {
-            binding.rvFavoriteSong.adapter = SongAdapter(it) { clickedSong ->
-                clickedSong.isClicked = !clickedSong.isClicked
-                favSongViewModel.updateSong(clickedSong)
-            }
+            binding.rvFavoriteSong.adapter = SongAdapter(it,favSongViewModel)
         }
     }
 

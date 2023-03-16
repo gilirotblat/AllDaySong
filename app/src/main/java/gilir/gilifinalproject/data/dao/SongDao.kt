@@ -33,6 +33,9 @@ interface SongDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addFavoriteSongs(songsList: List<Song>)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addFavoriteSong(id: FavoriteSong)
+
     //getters
     @Query("SELECT * FROM songs")
     fun getAllSongs(): LiveData<List<Song>>
@@ -53,8 +56,8 @@ interface SongDao {
 
     //    @Query("SELECT * FROM songs WHERE isClicked = 1")
 //    fun getFavoriteSong(): LiveData<List<Song>>
-    @Query("SELECT id FROM songs WHERE isClicked = 1")
-    fun getFavoriteSong(): LiveData<List<FavoriteSong>>
+    @Query("SELECT * FROM `fab songs`")
+    fun getFavoriteSongsIds(): LiveData<List<FavoriteSong>>
 
     @Query("SELECT * FROM songs INNER JOIN `fab songs` ON songs.id = `fab songs`.id")
     suspend fun getAllFavoriteSongs(): List<Song>
@@ -62,7 +65,6 @@ interface SongDao {
 
     @Query("SELECT * FROM songs WHERE artist =:artistId")
     fun getArtistSong(artistId: Int): LiveData<List<Song>>
-
 
     //sorted
 

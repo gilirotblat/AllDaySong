@@ -37,11 +37,7 @@ class SongFragment : Fragment() {
         binding.rvSongs.layoutManager = LinearLayoutManager(requireContext())
 
         homeViewModel.songs.observe(viewLifecycleOwner) {
-            binding.rvSongs.adapter = SongAdapter(it) { clickedSong -> // favorite click listener
-                clickedSong.isClicked = !clickedSong.isClicked
-                homeViewModel.updateSong(clickedSong)
-            }
-
+            binding.rvSongs.adapter = SongAdapter(it, homeViewModel)
         }
     }
 

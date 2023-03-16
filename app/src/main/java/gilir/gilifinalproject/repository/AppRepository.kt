@@ -1,29 +1,55 @@
 package gilir.gilifinalproject.repository
 
 
+import android.util.Log
 import gilir.gilifinalproject.data.dao.SongDao
+import gilir.gilifinalproject.models.FavoriteSong
 import gilir.gilifinalproject.models.songsapi.Song
 import gilir.gilifinalproject.models.songsapi.SongResponse
 import gilir.gilifinalproject.service.AppService
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
 class AppRepository(private val songDao: SongDao) {
 
-    suspend fun getSongs() = songDao.getAllSongsNotLive()
-    fun getArtists() = songDao.getAllArtists()
-    fun getPlaylists() = songDao.getAllPlaylists()
-    suspend fun getAllFavoriteSongs() = songDao.getAllFavoriteSongs()
+    suspend fun getSongs(): List<Song> = withContext(Dispatchers.IO) {
+        val songs = AppService.create().getSongs().songs
+        val favoriteSongs = songDao.getAllFavoriteSongs()
+        songs.forEach { song ->
+            favoriteSongs.forEach { favoriteSong ->
+                if (song.id == favoriteSong.id) {
+                    song.isFavorite = true
+                }
+            }
+        }
+        songs
+    }
 
+    suspend fun getArtists() = withContext(Dispatchers.IO) {
+        AppService.create().getArtists().artists
+    }
 
+    suspend fun getPlaylists() = withContext(Dispatchers.IO) {
+        AppService.create().getPlaylist().playlistList
+    }
+
+    suspend fun getAllFavoriteSongs() = withContext(Dispatchers.IO) {
+        songDao.getAllFavoriteSongs()
+    }
 
     suspend fun update(song: Song) {
         withContext(Dispatchers.IO) {
             songDao.updateSong(song)
         }
+    }
 
+    suspend fun addSongToFavorites(song: Song) {
+        withContext(Dispatchers.IO) {
+            songDao.addFavoriteSong(FavoriteSong(song.id)).also {
+                Log.d("TAG", "addSongToFavorites: $it")
+            }
+        }
     }
 
     suspend fun refresh() {
@@ -40,8 +66,6 @@ class AppRepository(private val songDao: SongDao) {
             //מיותר
             songDao.addAllPlaylists(playlists)
 
-           val favoriteSongs = songDao.getAllFavoriteSongs()
-            songDao.addFavoriteSongs(favoriteSongs)
         }
     }
 

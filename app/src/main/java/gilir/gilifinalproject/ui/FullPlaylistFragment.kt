@@ -3,11 +3,11 @@ package gilir.gilifinalproject.ui
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,23 +52,19 @@ class FullSongFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvTracklist.layoutManager =LinearLayoutManager(requireContext())
+        binding.rvTracklist.layoutManager = LinearLayoutManager(requireContext())
 
         with(binding) {
             playlist?.let { playlist ->
                 tvFullTitle.text = playlist.title
                 Picasso.get().load(playlist.picture).into(ivFullCover)
-               ivBackArrow.setOnClickListener {
-                   Navigation.findNavController(it).navigate(R.id.action_fullPlaylistFragment_to_homeFragment)
-               }
+                ivBackArrow.setOnClickListener {
+                    Navigation.findNavController(it)
+                        .navigate(R.id.action_fullPlaylistFragment_to_homeFragment)
+                }
 
-
-
-                fullPlaylstViewModel.playlistSongs.observe(viewLifecycleOwner) {response->
-                    binding.rvTracklist.adapter = SongAdapter(response) { clickedSong ->
-                        clickedSong.isClicked = !clickedSong.isClicked
-                        fullPlaylstViewModel.updateSong(clickedSong)
-                    }
+                fullPlaylstViewModel.playlistSongs.observe(viewLifecycleOwner) { response ->
+                    binding.rvTracklist.adapter = SongAdapter(response, fullPlaylstViewModel)
                 }
                 fullPlaylstViewModel.getPlaylistSongs(playlist.id.toString())
             }

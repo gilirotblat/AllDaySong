@@ -20,7 +20,6 @@ abstract class AppDataBase : RoomDatabase() {
 
     abstract fun songDao(): SongDao
 
-
     companion object {
         fun create(context: Context): AppDataBase =
             Room.databaseBuilder(context, AppDataBase::class.java, DB_NAME)
@@ -29,6 +28,4 @@ abstract class AppDataBase : RoomDatabase() {
                 .fallbackToDestructiveMigration()
                 .build()
     }
-
-
 }
