@@ -14,7 +14,7 @@ import gilir.gilifinalproject.databinding.FragmentSongBinding
 class SongFragment : Fragment() {
 
     private var _binding: FragmentSongBinding? = null
-    private lateinit var homeViewModel: MusicViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
 
     private val binding get() = _binding!!
@@ -28,7 +28,7 @@ class SongFragment : Fragment() {
         _binding = FragmentSongBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        homeViewModel = ViewModelProvider(this)[MusicViewModel::class.java]
+        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         return root
     }
 

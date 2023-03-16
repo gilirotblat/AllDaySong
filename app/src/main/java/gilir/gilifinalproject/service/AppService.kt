@@ -1,9 +1,7 @@
 package gilir.gilifinalproject.service
 
-import gilir.gilifinalproject.models.artistaong.ArtistSongResponse
 import gilir.gilifinalproject.models.artistapi.ArtistsResponse
 import gilir.gilifinalproject.models.playlistApi.PlaylistResponse
-import gilir.gilifinalproject.models.playlistsong.PlaylistSongResponse
 import gilir.gilifinalproject.models.songsapi.SongResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -12,9 +10,7 @@ import retrofit2.http.Path
 
 
 
-
-
-interface SongService {
+interface AppService {
 
     //songs: https://api.deezer.com/chart/0/tracks
 
@@ -35,21 +31,21 @@ interface SongService {
 
 
     @GET("radio/{PLAYLIST_ID}/tracks")
-   suspend fun getTracklistPlaylist(@Path("PLAYLIST_ID") playListId : String):PlaylistSongResponse
+   suspend fun getTracklistPlaylist(@Path("PLAYLIST_ID") playListId : String):SongResponse
 
 
     @GET("artist/{ARTIST_ID}/top?limit=50")
-    suspend fun getArtistSongs(@Path("ARTIST_ID") artistId : String):ArtistSongResponse
+    suspend fun getArtistSongs(@Path("ARTIST_ID") artistId : Long):SongResponse
 
 
     //לשנות את הכל לstring value
     companion object {
-        fun create(): SongService {
+        fun create(): AppService {
             return Retrofit.Builder()
                 .baseUrl("https://api.deezer.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(SongService::class.java)
+                .create(AppService::class.java)
         }
     }
 }

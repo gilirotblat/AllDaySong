@@ -12,7 +12,7 @@ import gilir.gilifinalproject.databinding.FragmentFavoriteSongBinding
 
 class FavoriteSongFragment : Fragment() {
     private var _binding: FragmentFavoriteSongBinding? = null
-    private lateinit var favSongViewModel: MusicViewModel
+    private lateinit var favSongViewModel: HomeViewModel
 
     private val binding get() = _binding!!
 
@@ -24,22 +24,20 @@ class FavoriteSongFragment : Fragment() {
         _binding = FragmentFavoriteSongBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        favSongViewModel = ViewModelProvider(this)[MusicViewModel::class.java]
+        favSongViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.rvFavoriteSong.layoutManager = LinearLayoutManager(requireContext())
-        favSongViewModel.favoriteSong.observe(viewLifecycleOwner){
+
+        favSongViewModel.favoriteSongs.observe(viewLifecycleOwner) {
             binding.rvFavoriteSong.adapter = SongAdapter(it) { clickedSong ->
                 clickedSong.isClicked = !clickedSong.isClicked
                 favSongViewModel.updateSong(clickedSong)
-
             }
         }
-
-
     }
 
     override fun onDestroyView() {

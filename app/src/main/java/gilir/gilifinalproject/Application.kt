@@ -3,7 +3,7 @@ package gilir.gilifinalproject
 import android.app.Application
 import gilir.gilifinalproject.data.AppDataBase
 
-import gilir.gilifinalproject.repository.SongRepository
+import gilir.gilifinalproject.repository.AppRepository
 
 
 class Application : Application() {
@@ -21,8 +21,8 @@ class Application : Application() {
             AppDataBase.create(instance)
         }
 
-        val repository : SongRepository by lazy {
-            SongRepository(db.songDao())
+        val repository : AppRepository by lazy {
+            AppRepository(db.songDao())
         }
     }
 

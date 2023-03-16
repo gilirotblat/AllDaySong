@@ -15,7 +15,7 @@ class PlaylistFragment : Fragment() {
     private var _binding: FragmentPlaylistBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var playlistViewModel: MusicViewModel
+    private lateinit var playlistViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +27,7 @@ class PlaylistFragment : Fragment() {
         val root: View = binding.root
 
         playlistViewModel =
-            ViewModelProvider(this)[MusicViewModel::class.java]
+            ViewModelProvider(this)[HomeViewModel::class.java]
         return root
 
     }

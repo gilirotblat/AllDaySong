@@ -30,7 +30,7 @@
         android:id="@+id/fullPlaylistFragment"
         android:name="gilir.gilifinalproject.ui.FullSongFragment"
         android:label="fragment_full_playlist"
-        tools:layout="@layout/fragment_full_playlist" >
+        tools:layout="@layout/fragment_full_page" >
         <action
             android:id="@+id/action_fullPlaylistFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

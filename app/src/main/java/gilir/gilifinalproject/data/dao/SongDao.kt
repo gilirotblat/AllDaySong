@@ -1,32 +1,18 @@
 package gilir.gilifinalproject.data.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
-import gilir.gilifinalproject.models.artistaong.ArtistSong
+import androidx.room.*
+import gilir.gilifinalproject.models.FavoriteSong
 import gilir.gilifinalproject.models.artistapi.Artist
 import gilir.gilifinalproject.models.playlistApi.Playlist
-import gilir.gilifinalproject.models.playlistsong.PlaylistSong
 import gilir.gilifinalproject.models.songsapi.Song
 
 
 @Dao
 interface SongDao {
 
-
     @Update
     suspend fun updateSong(song: Song)
-
-    @Update
-    suspend fun updateASong(song: ArtistSong)
-
-    @Update
-    suspend fun updatePlSong(song: PlaylistSong)
-
 
     //add
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -39,10 +25,13 @@ interface SongDao {
     suspend fun addAllPlaylists(songsList: List<Playlist>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addAllArtistSongs(songsList: List<ArtistSong>)
+    suspend fun addAllArtistSongs(songsList: List<Song>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addAllPlaylistsSong(songsList: List<PlaylistSong>)
+    suspend fun addAllPlaylistsSong(songsList: List<Song>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addFavoriteSongs(songsList: List<Song>)
 
     //getters
     @Query("SELECT * FROM songs")
@@ -60,12 +49,19 @@ interface SongDao {
     @Query("SELECT * FROM Playlist")
     fun getAllPlaylists(): LiveData<List<Playlist>>
 
-    @Query("SELECT * FROM songs WHERE isClicked = 1")
-    fun getFavoriteSong(): LiveData<List<Song>>
+    //@Query("SELECT * FROM songs WHERE ")
+
+    //    @Query("SELECT * FROM songs WHERE isClicked = 1")
+//    fun getFavoriteSong(): LiveData<List<Song>>
+    @Query("SELECT id FROM songs WHERE isClicked = 1")
+    fun getFavoriteSong(): LiveData<List<FavoriteSong>>
+
+    @Query("SELECT * FROM songs INNER JOIN `fab songs` ON songs.id = `fab songs`.id")
+    suspend fun getAllFavoriteSongs(): List<Song>
+
 
     @Query("SELECT * FROM songs WHERE artist =:artistId")
     fun getArtistSong(artistId: Int): LiveData<List<Song>>
-
 
 
     //sorted

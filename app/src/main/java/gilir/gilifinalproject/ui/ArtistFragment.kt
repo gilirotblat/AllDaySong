@@ -17,7 +17,7 @@ class ArtistFragment : Fragment() {
     private var _binding: FragmentArtistBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: MusicViewModel
+    private lateinit var viewModel: HomeViewModel
 
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class ArtistFragment : Fragment() {
         _binding = FragmentArtistBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        viewModel = ViewModelProvider(this)[MusicViewModel::class.java]
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         return root
     }
 

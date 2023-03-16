@@ -13,18 +13,16 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import gilir.gilifinalproject.R
-import gilir.gilifinalproject.adapters.PlaylistSongAdapter
 import gilir.gilifinalproject.adapters.SongAdapter
-import gilir.gilifinalproject.databinding.FragmentFullPlaylistBinding
+import gilir.gilifinalproject.databinding.FragmentFullPageBinding
 import gilir.gilifinalproject.models.playlistApi.Playlist
-import kotlinx.android.synthetic.main.fragment_full_artist.*
 
 
 const val ARG_PLAYLIST = "playlist"
 
 
 class FullSongFragment : Fragment() {
-    private var _binding: FragmentFullPlaylistBinding? = null
+    private var _binding: FragmentFullPageBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var fullPlaylstViewModel: FullPageViewModel
@@ -43,7 +41,7 @@ class FullSongFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFullPlaylistBinding.inflate(inflater, container, false)
+        _binding = FragmentFullPageBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
 
@@ -54,20 +52,20 @@ class FullSongFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvPlaylistTracklist.layoutManager =LinearLayoutManager(requireContext())
+        binding.rvTracklist.layoutManager =LinearLayoutManager(requireContext())
 
         with(binding) {
             playlist?.let { playlist ->
-                tvFullPlaylistTitle.text = playlist.title
+                tvFullTitle.text = playlist.title
                 Picasso.get().load(playlist.picture).into(ivFullCover)
-               ivBackArrowPlaylist.setOnClickListener {
+               ivBackArrow.setOnClickListener {
                    Navigation.findNavController(it).navigate(R.id.action_fullPlaylistFragment_to_homeFragment)
                }
 
 
 
                 fullPlaylstViewModel.playlistSongs.observe(viewLifecycleOwner) {response->
-                    binding.rvPlaylistTracklist.adapter = PlaylistSongAdapter(response) { clickedSong ->
+                    binding.rvTracklist.adapter = SongAdapter(response) { clickedSong ->
                         clickedSong.isClicked = !clickedSong.isClicked
                         fullPlaylstViewModel.updateSong(clickedSong)
                     }
